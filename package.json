@@ -1,0 +1,42 @@
+{
+  "name": "tajwin-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "imports": {
+    "#config/*": "./src/config/*",
+    "#common/*": "./src/common/*",
+    "#middlewares/*": "./src/middlewares/*",
+    "#modules/*": "./src/modules/*",
+    "#utils/*": "./src/utils/*",
+    "#core/*": "./src/core/*",
+    "#routes/*": "./src/routes/*"
+  },
+  "scripts": {
+    "dev": "nodemon --env-file=.env src/server.js",
+    "start": "node --env-file=.env src/server.js",
+    "seed:admin": "node --env-file=.env seedadmin.js"
+  },
+  "dependencies": {
+    "axios": "^1.18.1",
+    "bcryptjs": "^2.4.3",
+    "file-type": "^21.3.4",
+    "jsonwebtoken": "^9.0.2",
+    "lru-cache": "^11.5.2",
+    "mongoose": "^8.5.1",
+    "winston": "^3.19.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "cloudinary": "^2.10.0",
+    "compression": "^1.8.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.5.2",
+    "express-validator": "^7.3.2",
+    "helmet": "^8.3.0",
+    "multer": "^2.2.0",
+    "nodemon": "^3.1.14"
+  }
+}

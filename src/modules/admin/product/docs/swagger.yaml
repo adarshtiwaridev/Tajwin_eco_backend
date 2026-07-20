@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Admin Product Module APIs
+  version: 1.0.0
+  description: APIs for managing refurbished laptop products by Admins.
+paths:
+  /api/v1/admin/products:
+    post:
+      summary: Create a new product
+      tags: [Admin, Products]
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                brand:
+                  type: string
+                model:
+                  type: string
+                category:
+                  type: string
+                shortDescription:
+                  type: string
+                fullDescription:
+                  type: string
+                processorBrand:
+                  type: string
+                processorModel:
+                  type: string
+                ramSize:
+                  type: number
+                ramType:
+                  type: string
+                storageCapacity:
+                  type: number
+                storageType:
+                  type: string
+                screenSize:
+                  type: number
+                resolution:
+                  type: string
+                graphics:
+                  type: string
+                operatingSystem:
+                  type: string
+                conditionGrade:
+                  type: string
+                warranty:
+                  type: string
+                originalPrice:
+                  type: number
+                sellingPrice:
+                  type: number
+                stockQuantity:
+                  type: number
+                featuredImage:
+                  type: string
+                  format: binary
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                video:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Product created successfully
+    get:
+      summary: Get all products
+      tags: [Admin, Products]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: limit
+          schema:
+            type: integer
+        - in: query
+          name: search
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+  /api/v1/admin/products/{id}:
+    get:
+      summary: Get product by ID
+      tags: [Admin, Products]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+    put:
+      summary: Update product
+      tags: [Admin, Products]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Success
+    delete:
+      summary: Soft delete product
+      tags: [Admin, Products]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+  /api/v1/admin/products/dashboard/stats:
+    get:
+      summary: Get product dashboard statistics
+      tags: [Admin, Products]
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

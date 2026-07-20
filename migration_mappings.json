@@ -1,0 +1,236 @@
+[
+  {
+    "mod": "admin",
+    "type": "controller",
+    "oldPath": "#modules/admin/controller.js",
+    "newPath": "#controllers/admin.controller.js"
+  },
+  {
+    "mod": "admin",
+    "type": "dto",
+    "oldPath": "#modules/admin/dto.js",
+    "newPath": "#dtos/admin.dto.js"
+  },
+  {
+    "mod": "admin",
+    "type": "repository",
+    "oldPath": "#modules/admin/repository.js",
+    "newPath": "#repositories/admin.repository.js"
+  },
+  {
+    "mod": "admin",
+    "type": "route",
+    "oldPath": "#modules/admin/route.js",
+    "newPath": "#routes/admin.route.js"
+  },
+  {
+    "mod": "admin",
+    "type": "service",
+    "oldPath": "#modules/admin/service.js",
+    "newPath": "#services/admin.service.js"
+  },
+  {
+    "mod": "admin",
+    "type": "validator",
+    "oldPath": "#modules/admin/validator.js",
+    "newPath": "#validators/admin.validator.js"
+  },
+  {
+    "mod": "auth",
+    "type": "constants",
+    "oldPath": "#modules/auth/constants.js",
+    "newPath": "#constants/auth.constants.js"
+  },
+  {
+    "mod": "auth",
+    "type": "controller",
+    "oldPath": "#modules/auth/controller.js",
+    "newPath": "#controllers/auth.controller.js"
+  },
+  {
+    "mod": "auth",
+    "type": "dto",
+    "oldPath": "#modules/auth/dto.js",
+    "newPath": "#dtos/auth.dto.js"
+  },
+  {
+    "mod": "auth",
+    "type": "helper",
+    "oldPath": "#modules/auth/helper.js",
+    "newPath": "#helpers/auth.helper.js"
+  },
+  {
+    "mod": "auth",
+    "type": "model",
+    "oldPath": "#modules/auth/model.js",
+    "newPath": "#models/auth.model.js"
+  },
+  {
+    "mod": "auth",
+    "type": "permissions",
+    "oldPath": "#modules/auth/permissions.js",
+    "newPath": "#permissions/auth.permissions.js"
+  },
+  {
+    "mod": "auth",
+    "type": "repository",
+    "oldPath": "#modules/auth/repository.js",
+    "newPath": "#repositories/auth.repository.js"
+  },
+  {
+    "mod": "auth",
+    "type": "route",
+    "oldPath": "#modules/auth/route.js",
+    "newPath": "#routes/auth.route.js"
+  },
+  {
+    "mod": "auth",
+    "type": "service",
+    "oldPath": "#modules/auth/service.js",
+    "newPath": "#services/auth.service.js"
+  },
+  {
+    "mod": "auth",
+    "type": "validator",
+    "oldPath": "#modules/auth/validator.js",
+    "newPath": "#validators/auth.validator.js"
+  },
+  {
+    "mod": "dashboard",
+    "type": "controller",
+    "oldPath": "#modules/dashboard/controller.js",
+    "newPath": "#controllers/dashboard.controller.js"
+  },
+  {
+    "mod": "dashboard",
+    "type": "route",
+    "oldPath": "#modules/dashboard/route.js",
+    "newPath": "#routes/dashboard.route.js"
+  },
+  {
+    "mod": "dashboard",
+    "type": "service",
+    "oldPath": "#modules/dashboard/service.js",
+    "newPath": "#services/dashboard.service.js"
+  },
+  {
+    "mod": "delship",
+    "type": "controller",
+    "oldPath": "#modules/delship/controller.js",
+    "newPath": "#controllers/delship.controller.js"
+  },
+  {
+    "mod": "delship",
+    "type": "dto",
+    "oldPath": "#modules/delship/dto.js",
+    "newPath": "#dtos/delship.dto.js"
+  },
+  {
+    "mod": "delship",
+    "type": "model",
+    "oldPath": "#modules/delship/model.js",
+    "newPath": "#models/delship.model.js"
+  },
+  {
+    "mod": "delship",
+    "type": "repository",
+    "oldPath": "#modules/delship/repository.js",
+    "newPath": "#repositories/delship.repository.js"
+  },
+  {
+    "mod": "delship",
+    "type": "route",
+    "oldPath": "#modules/delship/route.js",
+    "newPath": "#routes/delship.route.js"
+  },
+  {
+    "mod": "delship",
+    "type": "service",
+    "oldPath": "#modules/delship/service.js",
+    "newPath": "#services/delship.service.js"
+  },
+  {
+    "mod": "delship",
+    "type": "validator",
+    "oldPath": "#modules/delship/validator.js",
+    "newPath": "#validators/delship.validator.js"
+  },
+  {
+    "mod": "retailer",
+    "type": "controller",
+    "oldPath": "#modules/retailer/controller.js",
+    "newPath": "#controllers/retailer.controller.js"
+  },
+  {
+    "mod": "retailer",
+    "type": "dto",
+    "oldPath": "#modules/retailer/dto.js",
+    "newPath": "#dtos/retailer.dto.js"
+  },
+  {
+    "mod": "retailer",
+    "type": "model",
+    "oldPath": "#modules/retailer/model.js",
+    "newPath": "#models/retailer.model.js"
+  },
+  {
+    "mod": "retailer",
+    "type": "repository",
+    "oldPath": "#modules/retailer/repository.js",
+    "newPath": "#repositories/retailer.repository.js"
+  },
+  {
+    "mod": "retailer",
+    "type": "route",
+    "oldPath": "#modules/retailer/route.js",
+    "newPath": "#routes/retailer.route.js"
+  },
+  {
+    "mod": "retailer",
+    "type": "service",
+    "oldPath": "#modules/retailer/service.js",
+    "newPath": "#services/retailer.service.js"
+  },
+  {
+    "mod": "retailer",
+    "type": "validator",
+    "oldPath": "#modules/retailer/validator.js",
+    "newPath": "#validators/retailer.validator.js"
+  },
+  {
+    "mod": "roles",
+    "type": "controller",
+    "oldPath": "#modules/roles/controller.js",
+    "newPath": "#controllers/roles.controller.js"
+  },
+  {
+    "mod": "roles",
+    "type": "dto",
+    "oldPath": "#modules/roles/dto.js",
+    "newPath": "#dtos/roles.dto.js"
+  },
+  {
+    "mod": "roles",
+    "type": "repository",
+    "oldPath": "#modules/roles/repository.js",
+    "newPath": "#repositories/roles.repository.js"
+  },
+  {
+    "mod": "roles",
+    "type": "route",
+    "oldPath": "#modules/roles/route.js",
+    "newPath": "#routes/roles.route.js"
+  },
+  {
+    "mod": "roles",
+    "type": "service",
+    "oldPath": "#modules/roles/service.js",
+    "newPath": "#services/roles.service.js"
+  },
+  {
+    "mod": "roles",
+    "type": "validator",
+    "oldPath": "#modules/roles/validator.js",
+    "newPath": "#validators/roles.validator.js"
+  }
+]
