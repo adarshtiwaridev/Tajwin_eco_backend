@@ -1,50 +1,27 @@
-import fs from 'fs';
-import path from 'path';
+import 'dotenv/config';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import { Role, Permission, RolePermission, User } from './modules/auth/model.js';
-import { PERMISSIONS } from './modules/auth/permissions.js';
+import dbConnect from './src/database/dbConnect.js';
+import { Role, Permission, RolePermission, User } from '#modules/auth/model.js';
+import { PERMISSIONS } from '#modules/auth/permissions.js';
+import logger from '#config/logger.js';
 
-// Parse .env manually for standalone script execution
-const envPath = path.resolve(process.cwd(), '.env');
-if (fs.existsSync(envPath)) {
-  const envFile = fs.readFileSync(envPath, 'utf-8');
-  envFile.split('\n').forEach((line) => {
-    const trimmedLine = line.trim();
-    if (!trimmedLine || trimmedLine.startsWith('#')) return;
-    const index = trimmedLine.indexOf('=');
-    if (index !== -1) {
-      const key = trimmedLine.substring(0, index).trim();
-      let val = trimmedLine.substring(index + 1).trim();
-      if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
-      if (val.startsWith("'") && val.endsWith("'")) val = val.slice(1, -1);
-      process.env[key] = val;
-    }
-  });
-}
-
-const MONGODB_URI = process.env.MONGODB_URI;
 const SEED_ADMIN_EMAIL = process.env.SEED_ADMIN_EMAIL || 'admin@tajwin.com';
 const SEED_ADMIN_PASSWORD = process.env.SEED_ADMIN_PASSWORD || 'AdminPassword123!';
 
 async function seed() {
-  if (!MONGODB_URI) {
-    console.error('Error: MONGODB_URI is not defined in environment variables.');
-    process.exit(1);
-  }
-
-  console.log('Connecting to database...');
+  logger.info('Connecting to database...');
   try {
-    await mongoose.connect(MONGODB_URI);
-    console.log('Connected to MongoDB successfully.');
+    await dbConnect();
+    logger.info('Connected to MongoDB successfully for seeding.');
   } catch (err) {
-    console.error('Database connection failed. Please ensure MongoDB is running.', err);
+    logger.error('Database connection failed. Please ensure MongoDB is running.', err);
     process.exit(1);
   }
 
   try {
     // 1. Seed Roles
-    console.log('\n--- Seeding Roles ---');
+    logger.info('\n--- Seeding Roles ---');
     const rolesToSeed = [
       { name: 'ADMIN', description: 'Administrator with full control' },
       { name: 'DELSHIP', description: 'Delship user account' },
@@ -58,15 +35,15 @@ async function seed() {
       let role = await Role.findOne({ name: roleData.name });
       if (!role) {
         role = await Role.create(roleData);
-        console.log(`+ Created Role: ${roleData.name}`);
+        logger.info(`+ Created Role: ${roleData.name}`);
       } else {
-        console.log(`* Role already exists: ${roleData.name}`);
+        logger.info(`* Role already exists: ${roleData.name}`);
       }
       rolesMap[roleData.name] = role;
     }
 
     // 2. Seed Permissions
-    console.log('\n--- Seeding Permissions ---');
+    logger.info('\n--- Seeding Permissions ---');
     const permissionsMap = {};
     for (const [key, val] of Object.entries(PERMISSIONS)) {
       let permission = await Permission.findOne({ key: val });
@@ -75,15 +52,15 @@ async function seed() {
           key: val,
           description: `Permission to execute ${val} actions`,
         });
-        console.log(`+ Created Permission: ${val}`);
+        logger.info(`+ Created Permission: ${val}`);
       } else {
-        console.log(`* Permission already exists: ${val}`);
+        logger.info(`* Permission already exists: ${val}`);
       }
       permissionsMap[val] = permission;
     }
 
     // 3. Map Permissions to ADMIN Role
-    console.log('\n--- Mapping Permissions to ADMIN Role ---');
+    logger.info('\n--- Mapping Permissions to ADMIN Role ---');
     const adminRole = rolesMap['ADMIN'];
     for (const permKey of Object.values(PERMISSIONS)) {
       const permObj = permissionsMap[permKey];
@@ -97,14 +74,14 @@ async function seed() {
           roleId: adminRole._id,
           permissionId: permObj._id,
         });
-        console.log(`+ Mapped Permission ${permKey} -> ADMIN`);
+        logger.info(`+ Mapped Permission ${permKey} -> ADMIN`);
       } else {
-        console.log(`* Mapping already exists: ${permKey} -> ADMIN`);
+        logger.info(`* Mapping already exists: ${permKey} -> ADMIN`);
       }
     }
 
     // 4. Seed Admin User
-    console.log('\n--- Checking Admin Account ---');
+    logger.info('\n--- Checking Admin Account ---');
     let adminUser = await User.findOne({ email: SEED_ADMIN_EMAIL, isDeleted: false });
     
     if (!adminUser) {
@@ -117,23 +94,24 @@ async function seed() {
         password: hashedPassword,
         roleId: adminRole._id,
       });
-      console.log(`+ Created Admin User: ${SEED_ADMIN_EMAIL}`);
+      logger.info(`+ Created Admin User: ${SEED_ADMIN_EMAIL}`);
     } else {
       // Force update the role to ensure it is correctly mapped to ADMIN
       adminUser.roleId = adminRole._id;
       await adminUser.save();
-      console.log(`* Admin User already exists: ${SEED_ADMIN_EMAIL}. Role forcefully updated to ADMIN.`);
+      logger.info(`* Admin User already exists: ${SEED_ADMIN_EMAIL}. Role forcefully updated to ADMIN.`);
     }
 
-    console.log('\nSeeding completed successfully!');
+    logger.info('\nSeeding completed successfully!');
   } catch (error) {
-    console.error('Error during seeding process:', error);
+    logger.error('Error during seeding process:', error);
   } finally {
-    await mongoose.disconnect();
-    console.log('Disconnected from MongoDB.');
+    if (mongoose.connection.readyState === 1) {
+      await mongoose.connection.close();
+      logger.info('Disconnected from MongoDB.');
+    }
     process.exit(0);
   }
 }
 
 seed();
-
