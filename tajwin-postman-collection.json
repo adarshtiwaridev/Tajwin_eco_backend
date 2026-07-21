@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Tajwin Enterprise API - V2",
-    "description": "Updated collection covering all refactored modules (Auth, Admin, Roles, Dealership, Retailer, Dashboard, Products).",
+    "name": "Tajwin - Admin Minimal (Auth & Products)",
+    "description": "Minimal collection containing only Login, Logout, Refresh, Profile, and core Product CRUD endpoints with pre-filled test data.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -9,7 +9,21 @@
       "name": "Auth",
       "item": [
         {
-          "name": "POST /auth/login",
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData && jsonData.data && jsonData.data.accessToken) {",
+                  "    pm.environment.set(\"accessToken\", jsonData.data.accessToken);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [
@@ -34,80 +48,10 @@
               "mode": "raw",
               "raw": "{\n  \"email\": \"admin@tajwin.com\",\n  \"password\": \"AdminPassword123!\"\n}"
             }
-          },
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "var jsonData = pm.response.json();",
-                  "if (jsonData && jsonData.data && jsonData.data.accessToken) {",
-                  "    pm.environment.set(\"accessToken\", jsonData.data.accessToken);",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
-          ]
-        },
-        {
-          "name": "POST /auth/forgot-password",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/forgot-password",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "forgot-password"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
           }
         },
         {
-          "name": "POST /auth/reset-password",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/reset-password",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "reset-password"
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "POST /auth/refresh",
+          "name": "Refresh Token",
           "request": {
             "method": "POST",
             "header": [
@@ -145,7 +89,7 @@
           }
         },
         {
-          "name": "POST /auth/logout",
+          "name": "Logout",
           "request": {
             "method": "POST",
             "header": [
@@ -183,7 +127,7 @@
           }
         },
         {
-          "name": "GET /auth/profile",
+          "name": "Get Profile",
           "request": {
             "method": "GET",
             "header": [
@@ -213,489 +157,19 @@
                   "type": "string"
                 }
               ]
-            }
-          }
-        },
-        {
-          "name": "PUT /auth/profile",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/profile",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "profile"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "POST /auth/change-password",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/auth/change-password",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "auth",
-                "change-password"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
             }
           }
         }
       ]
     },
     {
-      "name": "Admin",
+      "name": "Products",
       "item": [
         {
-          "name": "POST /admin/dealerships",
+          "name": "Create Product",
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/dealerships",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "dealerships"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "GET /admin/dealerships",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/dealerships",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "dealerships"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "GET /admin/dealerships/search",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/dealerships/search",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "dealerships",
-                "search"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "GET /admin/dealerships/:id",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/dealerships/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "dealerships",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "PATCH /admin/dealerships/:id/status",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/dealerships/:id/status",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "dealerships",
-                ":id",
-                "status"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "PATCH /admin/dealerships/:id/verify-document",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/dealerships/:id/verify-document",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "dealerships",
-                ":id",
-                "verify-document"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "GET /admin/dashboard/statistics",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/dashboard/statistics",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "dashboard",
-                "statistics"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "GET /admin/products/dashboard/stats",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/products/dashboard/stats",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "products",
-                "dashboard",
-                "stats"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "POST /admin/products/bulk-delete",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/products/bulk-delete",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "products",
-                "bulk-delete"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "POST /admin/products/bulk-status",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/products/bulk-status",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "products",
-                "bulk-status"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "POST /admin/products",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/v1/admin/products",
               "host": [
@@ -719,13 +193,134 @@
               ]
             },
             "body": {
-              "mode": "raw",
-              "raw": "{}"
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "Refurbished Dell Latitude 7490",
+                  "type": "text"
+                },
+                {
+                  "key": "brand",
+                  "value": "Dell",
+                  "type": "text"
+                },
+                {
+                  "key": "model",
+                  "value": "Latitude 7490",
+                  "type": "text"
+                },
+                {
+                  "key": "category",
+                  "value": "Laptops",
+                  "type": "text"
+                },
+                {
+                  "key": "shortDescription",
+                  "value": "A highly reliable premium business laptop.",
+                  "type": "text"
+                },
+                {
+                  "key": "fullDescription",
+                  "value": "The Dell Latitude 7490 is a premium business laptop designed for professionals who demand high performance and reliable security features. Refurbished to Grade A condition.",
+                  "type": "text"
+                },
+                {
+                  "key": "processorBrand",
+                  "value": "Intel",
+                  "type": "text"
+                },
+                {
+                  "key": "processorModel",
+                  "value": "Core i5-8350U",
+                  "type": "text"
+                },
+                {
+                  "key": "ramSize",
+                  "value": "16",
+                  "type": "text"
+                },
+                {
+                  "key": "ramType",
+                  "value": "DDR4",
+                  "type": "text"
+                },
+                {
+                  "key": "storageCapacity",
+                  "value": "256",
+                  "type": "text"
+                },
+                {
+                  "key": "storageType",
+                  "value": "SSD",
+                  "type": "text"
+                },
+                {
+                  "key": "screenSize",
+                  "value": "14",
+                  "type": "text"
+                },
+                {
+                  "key": "resolution",
+                  "value": "1920x1080",
+                  "type": "text"
+                },
+                {
+                  "key": "graphics",
+                  "value": "Intel UHD Graphics 620",
+                  "type": "text"
+                },
+                {
+                  "key": "operatingSystem",
+                  "value": "Windows 10 Pro",
+                  "type": "text"
+                },
+                {
+                  "key": "conditionGrade",
+                  "value": "Grade A",
+                  "type": "text"
+                },
+                {
+                  "key": "warranty",
+                  "value": "6 Months",
+                  "type": "text"
+                },
+                {
+                  "key": "originalPrice",
+                  "value": "60000",
+                  "type": "text"
+                },
+                {
+                  "key": "sellingPrice",
+                  "value": "25000",
+                  "type": "text"
+                },
+                {
+                  "key": "stockQuantity",
+                  "value": "15",
+                  "type": "text"
+                },
+                {
+                  "key": "featuredImage",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "video",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
             }
           }
         },
         {
-          "name": "GET /admin/products",
+          "name": "Get All Products",
           "request": {
             "method": "GET",
             "header": [
@@ -759,7 +354,7 @@
           }
         },
         {
-          "name": "GET /admin/products/:id",
+          "name": "Get Product By ID",
           "request": {
             "method": "GET",
             "header": [
@@ -783,7 +378,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "sample_id"
+                  "value": "PRODUCT_ID_HERE"
                 }
               ]
             },
@@ -800,15 +395,10 @@
           }
         },
         {
-          "name": "PUT /admin/products/:id",
+          "name": "Update Product",
           "request": {
             "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/v1/admin/products/:id",
               "host": [
@@ -824,7 +414,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "sample_id"
+                  "value": "PRODUCT_ID_HERE"
                 }
               ]
             },
@@ -839,100 +429,29 @@
               ]
             },
             "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "DELETE /admin/products/:id",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/products/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "products",
-                ":id"
-              ],
-              "variable": [
+              "mode": "formdata",
+              "formdata": [
                 {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
+                  "key": "name",
+                  "value": "Updated Refurbished Dell Latitude",
+                  "type": "text"
+                },
                 {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
+                  "key": "sellingPrice",
+                  "value": "23000",
+                  "type": "text"
+                },
+                {
+                  "key": "stockQuantity",
+                  "value": "20",
+                  "type": "text"
                 }
               ]
             }
           }
         },
         {
-          "name": "PATCH /admin/products/:id/restore",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/products/:id/restore",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "products",
-                ":id",
-                "restore"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "PATCH /admin/products/:id/status",
+          "name": "Update Status",
           "request": {
             "method": "PATCH",
             "header": [
@@ -957,7 +476,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "sample_id"
+                  "value": "PRODUCT_ID_HERE"
                 }
               ]
             },
@@ -973,20 +492,56 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{}"
+              "raw": "{\n  \"status\": \"Active\"\n}"
             }
           }
         },
         {
-          "name": "POST /admin/products/:id/images",
+          "name": "Delete Product",
           "request": {
-            "method": "POST",
+            "method": "DELETE",
             "header": [
               {
                 "key": "Content-Type",
                 "value": "application/json"
               }
             ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/admin/products/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "products",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "PRODUCT_ID_HERE"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Upload Images",
+          "request": {
+            "method": "POST",
+            "header": [],
             "url": {
               "raw": "{{baseUrl}}/api/v1/admin/products/:id/images",
               "host": [
@@ -1003,7 +558,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "sample_id"
+                  "value": "PRODUCT_ID_HERE"
                 }
               ]
             },
@@ -1018,60 +573,19 @@
               ]
             },
             "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "DELETE /admin/products/:id/images/:imageId",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/admin/products/:id/images/:imageId",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "admin",
-                "products",
-                ":id",
-                "images",
-                ":imageId"
-              ],
-              "variable": [
+              "mode": "formdata",
+              "formdata": [
                 {
-                  "key": "id",
-                  "value": "sample_id"
-                },
-                {
-                  "key": "imageId",
-                  "value": "sample_imageId"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
+                  "key": "images",
+                  "type": "file",
+                  "src": ""
                 }
               ]
             }
           }
         },
         {
-          "name": "PATCH /admin/products/:id/feature-image",
+          "name": "Set Feature Image",
           "request": {
             "method": "PATCH",
             "header": [
@@ -1096,7 +610,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "sample_id"
+                  "value": "PRODUCT_ID_HERE"
                 }
               ]
             },
@@ -1112,952 +626,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Roles",
-      "item": [
-        {
-          "name": "POST /roles",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/roles",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "roles"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "GET /roles",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/roles",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "roles"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "GET /roles/:id",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/roles/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "roles",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "PUT /roles/:id",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/roles/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "roles",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "DELETE /roles/:id",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/roles/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "roles",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Dealership",
-      "item": [
-        {
-          "name": "GET /dealerships/profile",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dealerships/profile",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dealerships",
-                "profile"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "PUT /dealerships/profile",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dealerships/profile",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dealerships",
-                "profile"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "POST /dealerships/retailers",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dealerships/retailers",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dealerships",
-                "retailers"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "GET /dealerships/retailers",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dealerships/retailers",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dealerships",
-                "retailers"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "GET /dealerships/retailers/:id",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dealerships/retailers/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dealerships",
-                "retailers",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "PUT /dealerships/retailers/:id",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dealerships/retailers/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dealerships",
-                "retailers",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "PATCH /dealerships/retailers/:id/status",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dealerships/retailers/:id/status",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dealerships",
-                "retailers",
-                ":id",
-                "status"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "PATCH /dealerships/retailers/:id/verify",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dealerships/retailers/:id/verify",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dealerships",
-                "retailers",
-                ":id",
-                "verify"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "DELETE /dealerships/retailers/:id",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dealerships/retailers/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dealerships",
-                "retailers",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "GET /dealerships/dashboard/overview",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dealerships/dashboard/overview",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dealerships",
-                "dashboard",
-                "overview"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Retailer",
-      "item": [
-        {
-          "name": "GET /retailers/profile",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/retailers/profile",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "retailers",
-                "profile"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "PUT /retailers/profile",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/retailers/profile",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "retailers",
-                "profile"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "POST /retailers/customers",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/retailers/customers",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "retailers",
-                "customers"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "GET /retailers/customers",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/retailers/customers",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "retailers",
-                "customers"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "GET /retailers/customers/search",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/retailers/customers/search",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "retailers",
-                "customers",
-                "search"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "GET /retailers/customers/:id",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/retailers/customers/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "retailers",
-                "customers",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        },
-        {
-          "name": "PUT /retailers/customers/:id",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/retailers/customers/:id",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "retailers",
-                "customers",
-                ":id"
-              ],
-              "variable": [
-                {
-                  "key": "id",
-                  "value": "sample_id"
-                }
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            },
-            "body": {
-              "mode": "raw",
-              "raw": "{}"
-            }
-          }
-        },
-        {
-          "name": "GET /retailers/dashboard/summary",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/retailers/dashboard/summary",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "retailers",
-                "dashboard",
-                "summary"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Dashboard",
-      "item": [
-        {
-          "name": "GET /dashboard",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/v1/dashboard",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "v1",
-                "dashboard"
-              ]
-            },
-            "auth": {
-              "type": "bearer",
-              "bearer": [
-                {
-                  "key": "token",
-                  "value": "{{accessToken}}",
-                  "type": "string"
-                }
-              ]
+              "raw": "{\n  \"imageId\": \"IMAGE_ID_HERE\"\n}"
             }
           }
         }

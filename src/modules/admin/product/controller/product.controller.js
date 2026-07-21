@@ -62,8 +62,12 @@ export const deleteImage = asyncHandler(async (req, res) => {
 
 export const featureImage = asyncHandler(async (req, res) => {
   const adminId = req.user.id;
-  const { imageUrl } = req.body;
-  const product = await ProductService.featureImage(req.params.id, imageUrl, adminId);
+  const { imageUrl } = req.body;   // <-- req.body is undefined
+  const product = await ProductService.featureImage(
+    req.params.id,
+    imageUrl,
+    adminId
+  );
   return sendSuccess(res, 200, 'Featured image updated successfully', product);
 });
 
