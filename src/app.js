@@ -42,6 +42,12 @@ app.get('/health', (req, res) => {
 // v1 API routes
 app.use('/api/v1', v1Routes);
 
+// Alias route support for /api/admin requests
+app.use('/api/admin', (req, res, next) => {
+  req.url = '/admin' + req.url;
+  v1Routes(req, res, next);
+});
+
 // Error Handling
 app.use(notFoundHandler);
 app.use(errorHandler);

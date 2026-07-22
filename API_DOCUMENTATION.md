@@ -134,3 +134,69 @@
 
 ### 4.4 Retailer Dashboard
 - **Endpoint:** `GET /dashboard/summary`
+
+---
+
+## 5. Inventory Management Module (Phase 1)
+**Base URL:** `/api/admin/inventory` (or `/api/v1/admin/inventory`)
+**Auth Required:** Yes (`ADMIN` role)
+
+### 5.1 Add Inventory
+- **Endpoint:** `POST /`
+- **Body:**
+```json
+{
+  "productName": "Dell Latitude 5420 Refurbished",
+  "brand": "Dell",
+  "model": "Latitude 5420",
+  "category": "Laptops",
+  "sku": "DELL-LAT-5420-001",
+  "serialNumber": "SN-987654321",
+  "totalStockQuantity": 15,
+  "availableStock": 15,
+  "remarks": "Grade A Condition"
+}
+```
+
+### 5.2 Get Inventory List
+- **Endpoint:** `GET /`
+- **Query Params:** `?page=1&limit=10&search=Dell&brand=Dell&category=Laptops&status=In Stock&sort=-createdAt`
+
+### 5.3 Get Low Stock Items
+- **Endpoint:** `GET /low-stock`
+- **Query Params:** `?page=1&limit=10&search=Dell`
+
+### 5.4 Get Out of Stock Items
+- **Endpoint:** `GET /out-of-stock`
+- **Query Params:** `?page=1&limit=10`
+
+### 5.5 Get Inventory Item by ID
+- **Endpoint:** `GET /:inventoryId`
+
+### 5.6 Update Inventory
+- **Endpoint:** `PUT /:inventoryId`
+- **Body:**
+```json
+{
+  "productName": "Dell Latitude 5420 Refurbished (Updated)",
+  "totalStockQuantity": 20,
+  "availableStock": 18,
+  "remarks": "Updated stock and details"
+}
+```
+
+### 5.7 Delete Inventory
+- **Endpoint:** `DELETE /:inventoryId`
+
+### 5.8 Increase Stock
+- **Endpoint:** `PATCH /:inventoryId/increase-stock`
+- **Body:** `{ "amount": 5 }`
+
+### 5.9 Decrease Stock
+- **Endpoint:** `PATCH /:inventoryId/decrease-stock`
+- **Body:** `{ "amount": 2 }`
+
+### 5.10 Direct Stock Update
+- **Endpoint:** `PATCH /:inventoryId/update-stock`
+- **Body:** `{ "totalStockQuantity": 25, "availableStock": 20 }`
+

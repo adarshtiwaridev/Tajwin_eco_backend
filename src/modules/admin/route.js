@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import productRoutes from './product/routes/product.routes.js';
+import inventoryRoutes from './inventory/routes/inventory.routes.js';
 import * as AdminController from './controller.js';
 import { authenticate } from '#middlewares/authMiddleware.js';
 import { authorizeRoles } from '#middlewares/permissionMiddleware.js';
@@ -27,6 +28,9 @@ router.patch('/dealerships/:id/verify-document', verifyDocumentsValidator, valid
 
 // Products Module
 router.use('/products', productRoutes);
+
+// Inventory Module
+router.use('/inventory', inventoryRoutes);
 
 // Dashboard
 router.get('/dashboard/statistics', AdminController.getDashboardStatistics);
