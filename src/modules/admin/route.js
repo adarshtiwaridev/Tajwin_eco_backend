@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import productRoutes from './product/routes/product.routes.js';
 import inventoryRoutes from './inventory/routes/inventory.routes.js';
+import orderRoutes from './order/routes/order.routes.js';
 import * as AdminController from './controller.js';
 import { authenticate } from '#middlewares/authMiddleware.js';
 import { authorizeRoles } from '#middlewares/permissionMiddleware.js';
@@ -31,6 +32,9 @@ router.use('/products', productRoutes);
 
 // Inventory Module
 router.use('/inventory', inventoryRoutes);
+
+// Orders Module
+router.use('/orders', orderRoutes);
 
 // Dashboard
 router.get('/dashboard/statistics', AdminController.getDashboardStatistics);

@@ -200,3 +200,98 @@
 - **Endpoint:** `PATCH /:inventoryId/update-stock`
 - **Body:** `{ "totalStockQuantity": 25, "availableStock": 20 }`
 
+---
+
+## 6. Order Management Module (Phase 1)
+**Base URL:** `/api/admin/orders` (or `/api/v1/admin/orders`)
+**Auth Required:** Yes (`ADMIN` role)
+
+### 6.1 Order Dashboard
+- **Endpoint:** `GET /dashboard`
+- **Response:** Total orders, today's orders, status breakdown (pending, confirmed, processing, packed, shipped, delivered, cancelled), total revenue, and recent orders.
+
+### 6.2 Create Order
+- **Endpoint:** `POST /`
+- **Body:**
+```json
+{
+  "orderId": "ORD-20260724-1001",
+  "customerInfo": {
+    "name": "Rohan Sharma",
+    "mobile": "9876543210",
+    "email": "rohan.sharma@example.com"
+  },
+  "shippingAddress": {
+    "address": "Flat 402, Green Park Apartments, MG Road",
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "pincode": "400001"
+  },
+  "items": [
+    {
+      "productName": "Dell Latitude 5420 Refurbished",
+      "sku": "DELL-LAT-5420-001",
+      "quantity": 1,
+      "price": 35000
+    }
+  ],
+  "paymentInfo": {
+    "method": "UPI",
+    "status": "Paid",
+    "transactionId": "TXN-987654321"
+  },
+  "tax": 1800,
+  "shippingCharge": 250,
+  "discount": 500
+}
+```
+
+### 6.3 Get All Orders (Listing)
+- **Endpoint:** `GET /`
+- **Query Params:** `?page=1&limit=10&search=Rohan&orderStatus=Pending&paymentStatus=Paid&shippingStatus=Pending&paymentMethod=UPI&startDate=2026-07-01&endDate=2026-07-31&sort=-createdAt`
+
+### 6.4 Get Order Details
+- **Endpoint:** `GET /:orderId`
+
+### 6.5 Update Order Details
+- **Endpoint:** `PUT /:orderId`
+
+### 6.6 Delete Order
+- **Endpoint:** `DELETE /:orderId`
+
+### 6.7 Update Order Status
+- **Endpoint:** `PATCH /:orderId/status`
+- **Body:** `{ "status": "Confirmed", "remarks": "Order verified by admin" }`
+
+### 6.8 Get Payment Details
+- **Endpoint:** `GET /:orderId/payment`
+
+### 6.9 Update Payment Status
+- **Endpoint:** `PATCH /:orderId/payment`
+- **Body:** `{ "status": "Paid", "method": "UPI", "transactionId": "TXN-12345678" }`
+
+### 6.10 Get Shipping Details
+- **Endpoint:** `GET /:orderId/shipping`
+
+### 6.11 Update Shipping Details
+- **Endpoint:** `PATCH /:orderId/shipping`
+- **Body:**
+```json
+{
+  "courierName": "BlueDart Express",
+  "trackingNumber": "BD-987654321IN",
+  "dispatchDate": "2026-07-24T12:00:00.000Z",
+  "estimatedDeliveryDate": "2026-07-27T18:00:00.000Z",
+  "status": "Shipped"
+}
+```
+
+### 6.12 Generate Invoice
+- **Endpoint:** `GET /:orderId/invoice`
+- **Response:** Formatted invoice JSON with company, customer, itemized breakdown, tax/GST summary, and grand total.
+
+### 6.13 Get Order Timeline
+- **Endpoint:** `GET /:orderId/timeline`
+- **Response:** Timestamped audit history of all activity on the order.
+
+

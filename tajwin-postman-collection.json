@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Tajwin - Admin API Collection (Auth, Products & Inventory)",
-    "description": "Complete collection containing Auth, Product Management, and Inventory Management (Phase 1) endpoints with pre-filled test payloads.",
+    "name": "Tajwin - Admin API Collection (Auth, Products, Inventory & Orders)",
+    "description": "Complete collection containing Auth, Product Management, Inventory Management, and Order Management (Phase 1) endpoints with pre-filled test payloads.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -1078,6 +1078,587 @@
             "body": {
               "mode": "raw",
               "raw": "{\n  \"totalStockQuantity\": 25,\n  \"availableStock\": 20\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Order Management (Phase 1)",
+      "item": [
+        {
+          "name": "Order Dashboard Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                "dashboard"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders"
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerInfo\": {\n    \"name\": \"Rohan Sharma\",\n    \"mobile\": \"9876543210\",\n    \"email\": \"rohan.sharma@example.com\"\n  },\n  \"shippingAddress\": {\n    \"address\": \"Flat 402, Green Park Apartments, MG Road\",\n    \"city\": \"Mumbai\",\n    \"state\": \"Maharashtra\",\n    \"pincode\": \"400001\"\n  },\n  \"items\": [\n    {\n      \"productName\": \"Dell Latitude 5420 Refurbished\",\n      \"sku\": \"DELL-LAT-5420-001\",\n      \"quantity\": 1,\n      \"price\": 35000\n    }\n  ],\n  \"paymentInfo\": {\n    \"method\": \"UPI\",\n    \"status\": \"Paid\",\n    \"transactionId\": \"TXN-987654321\"\n  },\n  \"tax\": 1800,\n  \"shippingCharge\": 250,\n  \"discount\": 500\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Orders (Listing & Search)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders?page=1&limit=10&search=Rohan",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "search",
+                  "value": "Rohan"
+                },
+                {
+                  "key": "orderStatus",
+                  "value": "Pending",
+                  "disabled": true
+                },
+                {
+                  "key": "paymentStatus",
+                  "value": "Paid",
+                  "disabled": true
+                },
+                {
+                  "key": "shippingStatus",
+                  "value": "Pending",
+                  "disabled": true
+                },
+                {
+                  "key": "paymentMethod",
+                  "value": "UPI",
+                  "disabled": true
+                },
+                {
+                  "key": "startDate",
+                  "value": "2026-07-01",
+                  "disabled": true
+                },
+                {
+                  "key": "endDate",
+                  "value": "2026-07-31",
+                  "disabled": true
+                },
+                {
+                  "key": "sort",
+                  "value": "-createdAt",
+                  "disabled": true
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Order Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/:orderId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                ":orderId"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "ORDER_ID_OR_MONGO_ID"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Order Details",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/:orderId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                ":orderId"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "ORDER_ID_OR_MONGO_ID"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerInfo\": {\n    \"name\": \"Rohan Sharma (Updated)\",\n    \"mobile\": \"9876543210\",\n    \"email\": \"rohan.updated@example.com\"\n  },\n  \"tax\": 2000,\n  \"discount\": 700\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Order",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/:orderId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                ":orderId"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "ORDER_ID_OR_MONGO_ID"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/:orderId/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                ":orderId",
+                "status"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "ORDER_ID_OR_MONGO_ID"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Confirmed\",\n  \"remarks\": \"Order confirmed after payment verification\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Payment Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/:orderId/payment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                ":orderId",
+                "payment"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "ORDER_ID_OR_MONGO_ID"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Payment Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/:orderId/payment",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                ":orderId",
+                "payment"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "ORDER_ID_OR_MONGO_ID"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Paid\",\n  \"method\": \"UPI\",\n  \"transactionId\": \"TXN-9876543210\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Shipping Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/:orderId/shipping",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                ":orderId",
+                "shipping"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "ORDER_ID_OR_MONGO_ID"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Shipping Details",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/:orderId/shipping",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                ":orderId",
+                "shipping"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "ORDER_ID_OR_MONGO_ID"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courierName\": \"BlueDart Express\",\n  \"trackingNumber\": \"BD-987654321IN\",\n  \"dispatchDate\": \"2026-07-24T12:00:00.000Z\",\n  \"estimatedDeliveryDate\": \"2026-07-27T18:00:00.000Z\",\n  \"status\": \"Shipped\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Generate Invoice Payload",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/:orderId/invoice",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                ":orderId",
+                "invoice"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "ORDER_ID_OR_MONGO_ID"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Order Timeline",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/orders/:orderId/timeline",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "orders",
+                ":orderId",
+                "timeline"
+              ],
+              "variable": [
+                {
+                  "key": "orderId",
+                  "value": "ORDER_ID_OR_MONGO_ID"
+                }
+              ]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{accessToken}}",
+                  "type": "string"
+                }
+              ]
             }
           }
         }
